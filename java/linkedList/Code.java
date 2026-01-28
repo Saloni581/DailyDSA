@@ -75,31 +75,36 @@ public class Code {
 
     // middle
     public static Node removeMiddle(Node head, int index) {
-        if(head == null) {
+        if(head == null || index < 0) {
             return null;
         }
         if(index == 0) {
             return removeStart(head);
         }
-        int i = 0;
         Node temp = head;
-        while(i < index -1) {
+        // not index-1 => will break for index == 2
+        for(int i=1; i<index; i++) {
+            // index out of bounds check 
+            if(temp.next == null) {
+                return head;    
+            }
             temp = temp.next;
-            i++;
         }
-        // make sure temp.next != null, though it does not matter if temp.next.next == null 
-        // for that you can add a check here or correct the loop or indexing
+        if(temp.next == null) {
+            return head; 
+        }
         temp.next = temp.next.next;
         return head;
     }
 
     // end
     public static Node removeEnd(Node head) {
-        if(head == null) {
+        // only one node or no node at all
+        if(head == null || head.next == null) {
             return null;
         }
         Node temp = head;
-        while(temp.next.next != null) {
+        while(temp.next != null && temp.next.next != null) {
             temp = temp.next;
         }
         temp.next = null;
@@ -127,18 +132,22 @@ public class Code {
     }
 
     // using recursion
-    public static int searchRecursion(Node head, int val, int index) {
+    public static int searchRecursion(Node head, int val) {
         // base case
         if(head == null) {
             return -1;
         }
         // recursion actual work 
         if(head.data == val) {
-            return index;
+            return 0;
         }
 
         // recursive call
-        return searchRecursion(head.next, val, index+1);
+        int index = searchRecursion(head.next, val);
+        if(index == -1) {
+            return -1;
+        }
+        return index+1;
     }
 
     // reverse linked list
@@ -174,7 +183,8 @@ public class Code {
         head = addMiddle(head, 3, 2);
         head = addEnd(head, 5);
         head = addEnd(head, 6);
-        System.out.println(searchRecursion(head, 6, 0));
+        head = removeMiddle(head, 3);
+        System.out.println(searchRecursion(head, 12));
         head = removeEnd(head);
         head = reverseLL(head);
         printLL(head);
