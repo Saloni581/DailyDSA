@@ -164,7 +164,25 @@ public class Code {
     }
 
     // remove nth node the end of the linked list
-
+    public static Node removeNthFromEnd(Node head, int n) {
+        // nth from end but size-n from start
+        Node temp = head;
+        int size = 0;
+        while(temp != null) {
+            size++;
+            temp = temp.next;
+        }
+        // head is the node to remove
+        if(n == size) {
+            return head.next;
+        }
+        temp = head;
+        for(int i=1; i<size-n; i++) {
+            temp = temp.next;
+        }
+        temp.next = temp.next.next;
+        return head;
+    }
 
     // print the linked list
     public static void printLL(Node head) {
@@ -187,6 +205,9 @@ public class Code {
         System.out.println(searchRecursion(head, 12));
         head = removeEnd(head);
         head = reverseLL(head);
+        printLL(head);
+        head = removeNthFromEnd(head, 5);
+        System.out.println();
         printLL(head);
     }
 }
