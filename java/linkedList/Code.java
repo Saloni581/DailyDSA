@@ -163,8 +163,8 @@ public class Code {
         return prev;
     }
 
-    // remove nth node the end of the linked list
-    public static Node removeNthFromEnd(Node head, int n) {
+    // remove nth node the end of the linked list - iterative 
+    public static Node removeNthFromEndIter(Node head, int n) {
         // nth from end but size-n from start
         Node temp = head;
         int size = 0;
@@ -184,6 +184,46 @@ public class Code {
         return head;
     }
 
+    // remove nth node the end of the linked list - recursive
+
+    // palindrome linked list
+    public static boolean isPalindromeLL(Node head) {
+        if(head == null || head.next == null) {
+            return true;
+        }
+        // find mid of the Linked list
+        Node slow = head;
+        Node fast = head;
+        // odd = fast == null and even fast.next == null
+        // Rule to remember: Always check fast before fast.next
+        // my mistake : fast.next != null || fast != null (This is dangerous and will cause NullPointerException)
+        while(fast != null && fast.next != null) {
+            slow = slow.next; // +1
+            fast = fast.next.next; // +2
+        }
+        // reverse the second half Linked List
+        Node prev = null;
+        Node curr = slow;
+        while(curr != null) {
+            Node next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+        // comparing first and second half 
+        Node leftHalfHead = head;
+        Node rightHalfHead = prev;
+        while(rightHalfHead != null) {
+            if(leftHalfHead.data != rightHalfHead.data) {
+                return false;
+            }
+            leftHalfHead = leftHalfHead.next;
+            rightHalfHead = rightHalfHead.next;
+        }
+        return true;
+    }
+
+
     // print the linked list
     public static void printLL(Node head) {
         Node temp = head;
@@ -194,20 +234,22 @@ public class Code {
     }
 
     public static void main(String[] args) {
-        Node head = new Node(0);
-        head = addStart(head, 4);
+        Node head = new Node(2);
         head = addStart(head, 2);
         head = addStart(head, 1);
+        head = addMiddle(head, 2, 3);
         head = addMiddle(head, 3, 2);
-        head = addEnd(head, 5);
-        head = addEnd(head, 6);
-        head = removeMiddle(head, 3);
-        System.out.println(searchRecursion(head, 12));
-        head = removeEnd(head);
-        head = reverseLL(head);
+        head = addEnd(head, 3);
+        head = addEnd(head, 2);
+        head = addEnd(head, 1);
+        // head = removeMiddle(head, 3);
+        // System.out.println(searchRecursion(head, 12));
+        // head = removeEnd(head);
+        // head = reverseLL(head);
         printLL(head);
-        head = removeNthFromEnd(head, 5);
-        System.out.println();
-        printLL(head);
+        // head = removeNthFromEndIter(head, 5);
+        // System.out.println();
+        // printLL(head);
+        System.out.println(isPalindromeLL(head));
     }
 }
