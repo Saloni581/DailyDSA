@@ -163,7 +163,7 @@ public class Code {
         return prev;
     }
 
-    // remove nth node the end of the linked list - iterative 
+    // remove nth node from the end of the linked list - iterative 
     public static Node removeNthFromEndIter(Node head, int n) {
         // nth from end but size-n from start
         Node temp = head;
@@ -184,7 +184,28 @@ public class Code {
         return head;
     }
 
-    // remove nth node the end of the linked list - recursive
+    // remove nth node from the end of the linked list - recursive
+    public static Node removeNthFromEndRec(Node head, int n) {
+        int count = removeNthFromEndRecHelper(head, n);
+        // head is the node to remove
+        if(count == n) {
+            return head.next;
+        }
+        return head;
+    }
+
+    public static int removeNthFromEndRecHelper(Node head, int n) {
+        // base case
+        if(head == null) {
+            return 0;
+        }
+        // work 
+        int count = removeNthFromEndRecHelper(head.next, n)+1;
+        if(count == n+1 && head.next != null) {
+            head.next = head.next.next;
+        }
+        return count;
+    }
 
     // palindrome linked list
     public static boolean isPalindromeLL(Node head) {
@@ -250,6 +271,9 @@ public class Code {
         // head = removeNthFromEndIter(head, 5);
         // System.out.println();
         // printLL(head);
-        System.out.println(isPalindromeLL(head));
+        // System.out.println(isPalindromeLL(head));
+        System.out.println();
+        System.out.println(removeNthFromEndRec(head, 2));
+        printLL(head);
     }
 }
