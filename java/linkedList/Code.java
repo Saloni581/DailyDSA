@@ -244,6 +244,24 @@ public class Code {
         return true;
     }
 
+    // find if there exist a cycle in linked list
+    public static boolean isCycle(Node head) {
+        if(head == null) {
+            return false;
+        }
+        // slow fast pointer approach : if(slow == fast) ==> cycle exists
+        Node slow, fast;
+        slow = fast = head;
+        while(fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+            if(slow == fast) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     // print the linked list
     public static void printLL(Node head) {
@@ -263,17 +281,20 @@ public class Code {
         head = addEnd(head, 3);
         head = addEnd(head, 2);
         head = addEnd(head, 1);
+        // for creating a cycle in ll
+        // head.next = head;
         // head = removeMiddle(head, 3);
         // System.out.println(searchRecursion(head, 12));
         // head = removeEnd(head);
         // head = reverseLL(head);
-        printLL(head);
+        // printLL(head);
         // head = removeNthFromEndIter(head, 5);
         // System.out.println();
         // printLL(head);
         // System.out.println(isPalindromeLL(head));
-        System.out.println();
-        System.out.println(removeNthFromEndRec(head, 2));
-        printLL(head);
+        // System.out.println();
+        // head = removeNthFromEndRec(head, 4);
+        // printLL(head);
+        System.out.println(isCycle(head));
     }
 }
