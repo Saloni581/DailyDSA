@@ -262,6 +262,47 @@ public class Code {
         return false;
     }
 
+    // remove a cycle from the linked list if exists any
+    public static Node removeCycle(Node head) {
+        if(head == null) {
+            return head;
+        }
+        // Detect the cycle
+        Node slow = head;
+        Node fast = head;
+        boolean isCycle = false;
+        while(fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+            if(slow == fast) {
+                isCycle = true;
+                break;
+            }
+        }
+        if(!isCycle) {
+            return head;
+        }
+        slow = head;
+        Node prev = null;
+
+        // special case => cycle starts at head
+        if (slow == fast) {
+        while (fast.next != slow) {
+            fast = fast.next;
+        }
+            fast.next = null;
+            return head;
+        }
+
+        while(slow != fast) {
+            prev = fast;
+            slow = slow.next;
+            fast = fast.next;
+        }
+        prev.next = null;
+        return head;
+    }
+
 
     // print the linked list
     public static void printLL(Node head) {
@@ -273,28 +314,33 @@ public class Code {
     }
 
     public static void main(String[] args) {
-        Node head = new Node(2);
-        head = addStart(head, 2);
-        head = addStart(head, 1);
-        head = addMiddle(head, 2, 3);
-        head = addMiddle(head, 3, 2);
-        head = addEnd(head, 3);
-        head = addEnd(head, 2);
-        head = addEnd(head, 1);
-        // for creating a cycle in ll
-        // head.next = head;
-        // head = removeMiddle(head, 3);
-        // System.out.println(searchRecursion(head, 12));
-        // head = removeEnd(head);
-        // head = reverseLL(head);
-        // printLL(head);
-        // head = removeNthFromEndIter(head, 5);
-        // System.out.println();
-        // printLL(head);
-        // System.out.println(isPalindromeLL(head));
-        // System.out.println();
-        // head = removeNthFromEndRec(head, 4);
-        // printLL(head);
-        System.out.println(isCycle(head));
+    // -------- Create Linked List --------
+    Node head = new Node(1);
+    head = addEnd(head, 2);
+    head = addEnd(head, 3);
+    head = addEnd(head, 4);
+    head = addEnd(head, 5);
+
+    System.out.println("Original Linked List: ");
+    printLL(head);
+
+    // -------- Create Cycle in Middle (node with value 3) --------
+    Node temp = head;
+    Node cycleNode = null;
+
+    while (temp.next != null) {
+        if (temp.data == 3) {
+            cycleNode = temp;
+        }
+        temp = temp.next;
     }
+    temp.next = cycleNode;  // last node → node with value 3
+
+    // -------- Remove Cycle --------
+    head = removeCycle(head);
+
+    // -------- Print After Cycle Removal --------
+    System.out.println("\nLinked List after removing cycle:");
+    printLL(head);
+ }
 }
