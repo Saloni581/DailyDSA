@@ -303,6 +303,44 @@ public class Code {
         return head;
     }
 
+    // merge sort in linked list
+    // public static Node merge(Node leftHead, Node rightHead) {
+
+    // }
+
+    public static Node mergeSort(Node head) {
+        // base case
+        if(head == null || head.next == null) {
+            return head;
+        }
+        // merge sort (work)
+        // find mid
+        Node slow = head, fast = head;
+        while(fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        // slow now is at mid Node
+        Node rightHalfHead = slow.next;
+        slow.next = null;
+        // sorting left half
+        Node leftSorted = mergeSort(head);    
+        // sorting right half
+        Node rightSorted = mergeSort(rightHalfHead); 
+        head = merge(leftSorted, rightSorted);
+        return head;
+    }
+
+    // size of the linked list
+    public static int size(Node head) {
+        Node temp = head;
+        int size = 0;
+        while(temp != null) {
+            size++;
+            temp = temp.next;
+        }
+        return size;
+    }
 
     // print the linked list
     public static void printLL(Node head) {
@@ -320,27 +358,27 @@ public class Code {
     head = addEnd(head, 3);
     head = addEnd(head, 4);
     head = addEnd(head, 5);
-
     System.out.println("Original Linked List: ");
     printLL(head);
-
-    // -------- Create Cycle in Middle (node with value 3) --------
-    Node temp = head;
-    Node cycleNode = null;
-
-    while (temp.next != null) {
-        if (temp.data == 3) {
-            cycleNode = temp;
-        }
-        temp = temp.next;
-    }
-    temp.next = cycleNode;  // last node → node with value 3
-
-    // -------- Remove Cycle --------
-    head = removeCycle(head);
-
-    // -------- Print After Cycle Removal --------
-    System.out.println("\nLinked List after removing cycle:");
-    printLL(head);
+    // // -------- Create Cycle in Middle (node with value 3) --------
+    // Node temp = head;
+    // Node cycleNode = null;
+    // while (temp.next != null) {
+    //     if (temp.data == 3) {
+    //         cycleNode = temp;
+    //     }
+    //     temp = temp.next;
+    // }
+    // temp.next = cycleNode;  // last node → node with value 3
+    // System.out.println("\nLinked list cycle: " +isCycle(head));
+    // // -------- Remove Cycle --------
+    // head = removeCycle(head);
+    // // -------- Print After Cycle Removal --------
+    // System.out.print("Linked List after removing cycle:");
+    // printLL(head);
+    // System.out.println("\nLinked list cycle: " +isCycle(head));
+    // -----------------SIZE OF LL-----------------------
+    int size = size(head);
+    mergeSort(head, 0, size-1);
  }
 }
