@@ -304,18 +304,35 @@ public class Code {
     }
 
     // merge sort in linked list
-    // public static Node merge(Node leftHead, Node rightHead) {
-
-    // }
+    public static Node merge(Node leftHead, Node rightHead) {
+        Node left = leftHead, right = rightHead;
+        Node dummy = new Node(-1);
+        Node tail = dummy;
+        while(left != null && right != null) {
+            if(left.data <= right.data) {
+                tail.next= left;
+                left = left.next;
+            } else {
+                tail.next = right;
+                right = right.next;
+            } 
+            tail = tail.next;
+        }
+        if(left != null) {
+            tail.next = left;
+        } else {
+            tail.next = right;
+        }
+        return dummy.next;
+    }
 
     public static Node mergeSort(Node head) {
         // base case
         if(head == null || head.next == null) {
             return head;
         }
-        // merge sort (work)
-        // find mid
-        Node slow = head, fast = head;
+        // split the list
+        Node slow = head, fast = head.next;
         while(fast != null && fast.next != null) {
             slow = slow.next;
             fast = fast.next.next;
@@ -327,8 +344,7 @@ public class Code {
         Node leftSorted = mergeSort(head);    
         // sorting right half
         Node rightSorted = mergeSort(rightHalfHead); 
-        head = merge(leftSorted, rightSorted);
-        return head;
+        return merge(leftSorted, rightSorted);
     }
 
     // size of the linked list
@@ -354,10 +370,10 @@ public class Code {
     public static void main(String[] args) {
     // -------- Create Linked List --------
     Node head = new Node(1);
+    head = addEnd(head, 5);
+    head = addEnd(head, 4);
     head = addEnd(head, 2);
     head = addEnd(head, 3);
-    head = addEnd(head, 4);
-    head = addEnd(head, 5);
     System.out.println("Original Linked List: ");
     printLL(head);
     // // -------- Create Cycle in Middle (node with value 3) --------
@@ -377,8 +393,9 @@ public class Code {
     // System.out.print("Linked List after removing cycle:");
     // printLL(head);
     // System.out.println("\nLinked list cycle: " +isCycle(head));
-    // -----------------SIZE OF LL-----------------------
-    int size = size(head);
-    mergeSort(head, 0, size-1);
+    // -----------------MERGE SORT ON LL-----------------------
+    head = mergeSort(head);
+    System.out.println();
+    printLL(head);
  }
 }
