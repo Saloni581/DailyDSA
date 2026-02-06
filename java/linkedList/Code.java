@@ -370,7 +370,6 @@ public class Code {
     // PRACTICE QUESTIONS
     // Arrange Odd Even Index Nodes
     public static Node arrangeOddEvenIndexNodes(Node head) {
-        // no node, 1 node and 2 nodes = return as is
         if (head == null || head.next == null) return head;
 
         Node odd = head;
@@ -386,6 +385,25 @@ public class Code {
         }
     
         odd.next = evenHead;
+        return head;
+    }
+
+    // Remove Duplices from sorted ll
+    public Node deleteDuplicates(Node head) {
+        if(head == null || head.next == null) {
+            return head;
+        }
+        Node prev = head;
+        Node temp = head.next;
+        while(temp != null) {
+            if(prev.data == temp.data && temp.next != null) {
+                prev.next = temp.next;
+            } else if(prev.data == temp.data && temp.next == null) {
+                prev.next = null;
+            } else
+            prev = prev.next;
+            temp = temp.next;
+        }
         return head;
     }
 
