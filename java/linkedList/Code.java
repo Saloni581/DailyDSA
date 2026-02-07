@@ -407,6 +407,23 @@ public class Code {
         return head;
     }
 
+    // rotate list to the right by k places
+    public static Node rotateList(Node head, int k) {
+        if(head == null || head.next == null) {
+            return head;
+        }
+        // find tail and length of the list
+        Node temp = head;
+        int size = 1;
+        while(temp.next != null) {
+            size++;
+            temp = temp.next;
+        }
+        Node tail = temp;
+        head = temp.next = head;
+        k = k%size;   
+    }
+
 
     public static void main(String[] args) {
     // -------- Create Linked List --------
