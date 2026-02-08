@@ -409,19 +409,38 @@ public class Code {
 
     // rotate list to the right by k places
     public static Node rotateList(Node head, int k) {
+        // edge cases
         if(head == null || head.next == null) {
             return head;
         }
-        // find tail and length of the list
-        Node temp = head;
-        int size = 1;
-        while(temp.next != null) {
-            size++;
-            temp = temp.next;
+        if(k == 0) {
+            return head;
         }
-        Node tail = temp;
-        head = temp.next = head;
-        k = k%size;   
+        // find size of ll
+        int length = size(head);
+        k = k%length;   
+
+        // find tail 
+        Node tail = head;
+        while(tail.next != null) {
+            tail = tail.next;
+        }
+    
+        // make cycle
+        tail.next = head;
+
+        // find new tail
+        int newTailIndex = length - k - 1;
+        Node newTail = head;
+        int i=0;
+        while(i<newTailIndex) {
+            i++;
+            newTail = newTail.next;
+        }
+        // find new head
+        Node newHead = newTail.next;
+        newTail.next = null;
+        return newHead;
     }
 
 
@@ -452,8 +471,12 @@ public class Code {
     // printLL(head);
     // System.out.println("\nLinked list cycle: " +isCycle(head));
     // -----------------MERGE SORT ON LL-----------------------
-    head = arrangeOddEvenIndexNodes(head);
+    // head = arrangeOddEvenIndexNodes(head);
+    // System.out.println();
+    // printLL(head);
+    // rotate list by k places to the right
     System.out.println();
+    head = rotateList(head, 2);
     printLL(head);
  }
 }
