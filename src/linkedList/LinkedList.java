@@ -1,10 +1,11 @@
-public class Code {
+package src.linkedList;
+public class LinkedList {
 
     // Creating Linked List Manually
-    static class Node {
-        int data;
-        Node next;
-        Node(int data) {
+    public static class Node {
+        public int data;
+        public Node next;
+        public Node(int data) {
             this.data = data;
             this.next = null;
         }
