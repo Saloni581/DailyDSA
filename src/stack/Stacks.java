@@ -1,0 +1,155 @@
+package src.stack;
+import src.linkedList.LinkedList;
+import java.util.ArrayList;
+import java.util.Stack;
+
+public class Stacks {
+    // structure
+    // LAST IN FIRST OUT (The element that is inserted last gets removed first.)
+    // STACK : MANUAL IMPLEMENTATIONS
+    // Using Arrays
+    // Using ArrayList
+    // Using LinkedList
+    // 1 add on top (push)
+    // 2 remove from top (pop)
+    // 3 get the top element (peek)
+    // 4 if stack is empty or not (isEmpty)
+    public static class StackLL {
+        static LinkedList.Node top = null;
+        // is stack empty
+        public static boolean isEmpty() {
+            return top == null;
+        }
+        // push element 
+        public static LinkedList.Node push(int data) {
+            // create new Node with given data
+            LinkedList.Node newNode = new LinkedList.Node(data);
+            if(top == null) {
+                top = newNode;
+                return top;
+            }
+            newNode.next = top;
+            top = newNode;
+            return top;
+        }
+        // peek element (top)
+        public static int peek() {
+            if(top == null) {
+                return -1;
+            }
+            return top.data;
+        }
+        // remove element (basically pop the last element)
+        public static int pop() {
+            if(top == null) {
+                return -1;
+            }
+            int topElm = top.data;
+            top = top.next;
+            return topElm;
+        }
+    }
+    public static class StackAL {
+        static ArrayList<Integer> top = new ArrayList<>();
+        // add on top
+        public static void push(int data) {
+            top.add(data);
+        }
+        // remove from top
+        public static int pop() {
+            if(top.size() == 0) {
+                return -1;
+            }
+            int topElm = top.get(top.size()-1);
+            top.remove(top.size()-1);
+            return topElm;
+        }
+        // see the top element
+        public static int peek() {
+            if(top.size() == 0) {
+                return -1;
+            }
+            return top.get(top.size()-1);
+        } 
+        // check if stack is empty
+        public static boolean isEmpty() {
+            return top.size() == 0;
+        }  
+    }
+
+    // Iterative 
+    public static Stack<Integer> pushAtTheBottom(Stack<Integer> s, int val) {
+        Stack<Integer> newS = new Stack<>();
+        while(!s.isEmpty()) {
+            newS.push(s.pop());
+        }
+        s.push(val);
+        while(!newS.isEmpty()) {
+            s.push(newS.pop());
+        }
+        return s;
+    }
+    // Recursion
+    public static Stack<Integer> pushAtTheBottomRec(Stack<Integer> s, int val) {
+        // Base Case
+        if(s.isEmpty()) {
+            s.push(val);
+            return s;
+        }
+        int top = s.pop();
+        pushAtTheBottomRec(s, val);
+        s.push(top);
+        return s;
+    }
+
+
+    public static void main(String[] args) {
+        // // using linked list
+        // LinkedList.Node top = null;
+        // top = LinkedList.addStart(top, 1);
+        // top = LinkedList.addStart(top, 2);
+        // top = LinkedList.addStart(top, 3);
+        // top = LinkedList.addStart(top, 4);
+        // top = LinkedList.addStart(top, 5);
+        // // isEmpty()
+        // if(StackLL.isEmpty()) {
+        //     System.out.println("Man! Stack is Totally empty... What a pain");
+        // } else {
+        //     System.out.println("ummMMMM Nah! We got elements in our Stack - go get em!");
+        // }
+        // // push()
+        // top = StackLL.push(12);
+        // // peek()
+        // int ans = StackLL.peek();
+        // System.out.println("Woah! This one is the fortunate who stands at the top: "+ans);
+        // // pop()
+        // int ans1 = StackLL.pop();
+        // System.out.println("Man! This unfortunate is the popped element: "+ ans1);
+
+        // using ArrayList
+        // ArrayList<Integer> stack = new ArrayList<>();
+        // StackAL.push(1);
+        // StackAL.push(2);
+        // StackAL.push(3);
+        // StackAL.push(4);
+        // StackAL.push(5);
+        // System.out.println(stack);
+        // StackAL.pop();
+        // System.out.println(stack);
+        // System.out.println(StackAL.peek());
+        // System.out.println(StackAL.isEmpty());
+
+        // using Built in Stack
+        Stack<Integer> s = new Stack<>();
+        s.push(1);
+        s.push(2);
+        s.push(3);
+        s.push(4);
+        s.push(5);
+        s.push(6);
+        s = pushAtTheBottom(s, 13);
+        while(!s.isEmpty()) {
+            System.out.print(s.pop() + " ");
+        }
+    }
+}
