@@ -102,6 +102,19 @@ public class Stacks {
         return s;
     }
 
+    // reverse a string using stack
+    public static String reverseString(String str) {
+        Stack<Character> s = new Stack<>();
+        for(int i=0; i<str.length(); i++) {
+            s.push(str.charAt(i));
+        }
+        StringBuilder sb = new StringBuilder();
+        while(!s.isEmpty()) {
+            sb.append(s.pop());
+        }
+        return sb.toString();
+    }
+
 
     public static void main(String[] args) {
         // // using linked list
@@ -140,16 +153,24 @@ public class Stacks {
         // System.out.println(StackAL.isEmpty());
 
         // using Built in Stack
-        Stack<Integer> s = new Stack<>();
-        s.push(1);
-        s.push(2);
-        s.push(3);
-        s.push(4);
-        s.push(5);
-        s.push(6);
-        s = pushAtTheBottom(s, 13);
-        while(!s.isEmpty()) {
-            System.out.print(s.pop() + " ");
+        // Stack<Integer> s = new Stack<>();
+        // s.push(1);
+        // s.push(2);
+        // s.push(3);
+        // s.push(4);
+        // s.push(5);
+        // s.push(6);
+        // s = pushAtTheBottom(s, 13);
+        // while(!s.isEmpty()) {
+        //     System.out.print(s.pop() + " ");
+        // }
+        
+        // Reverse a string using stack
+        String input = "saloni";
+        System.out.println("Original String: "+ input);
+        String ans = reverseString(input);
+        for(int i=0; i<ans.length(); i++) {
+            System.out.print(ans.charAt(i));
         }
     }
 }
