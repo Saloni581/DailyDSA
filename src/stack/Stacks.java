@@ -115,6 +115,27 @@ public class Stacks {
         return sb.toString();
     }
 
+    // reverse a stack
+    public static void reverseStack(Stack<Integer> st) {
+        ArrayList<Integer> al = new ArrayList<>();
+        while(!st.isEmpty()) {
+            al.add(st.pop());
+        }
+        for(int i=0; i<al.size(); i++) {
+            st.push(al.get(i));
+        }
+    }
+
+    // reverse a stack : Using Recursion
+    public static void reverseStackRec(Stack<Integer> st) {
+        if(st.isEmpty()) {
+            return;
+        }
+        int top = st.pop();
+        reverseStackRec(st);
+        pushAtTheBottom(st, top);
+    }
+
 
     public static void main(String[] args) {
         // // using linked list
@@ -166,11 +187,24 @@ public class Stacks {
         // }
         
         // Reverse a string using stack
-        String input = "saloni";
-        System.out.println("Original String: "+ input);
-        String ans = reverseString(input);
-        for(int i=0; i<ans.length(); i++) {
-            System.out.print(ans.charAt(i));
-        }
+        // String input = "saloni";
+        // System.out.println("Original String: "+ input);
+        // String ans = reverseString(input);
+        // for(int i=0; i<ans.length(); i++) {
+        //     System.out.print(ans.charAt(i));
+        // }
+
+        // reverse a stack
+        Stack<Integer> st = new Stack<>();
+        st.push(1);
+        st.push(2);
+        st.push(3);
+        st.push(4);
+        st.push(5);
+        st.push(6);
+        System.out.println("Before Reversing: "+ st);
+        // reverseStack(st);
+        reverseStackRec(st);
+        System.out.println("After Reversing: "+ st);
     }
 }
