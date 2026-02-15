@@ -16,9 +16,33 @@ public class Code {
         return ans;
     }
 
+    // leetcode 67
+    public static String binSum(String a, String b) {
+        int carry = 0;
+        int i = a.length()-1; 
+        int j = b.length()-1;
+        StringBuilder sb = new StringBuilder();
+        while(i >=0 || j>=0 || carry != 0) {
+            int sum = 0;
+            sum += carry;
+            if(i>=0) {
+                sum += a.charAt(i)-'0';
+                i--;
+            }
+            if(j>=0) {
+                sum += b.charAt(j)-'0';
+                j--;
+            }
+            sb.append(sum%2);
+            carry = sum/2;
+        }
+        return sb.reverse().toString();
+    }
+
     public static void main(String[] args) {
-        int nums[] = {5, 2, 3, 1};
-        int ans[] = adjacentPairWithMinSum(nums);
-        System.out.println(ans[0]+ " "+ ans[1]);
+        // int nums[] = {5, 2, 3, 1};
+        // int ans[] = adjacentPairWithMinSum(nums);
+        // System.out.println(ans[0]+ " "+ ans[1]);
+        System.out.println(binSum("11", "1"));
     }
 }
