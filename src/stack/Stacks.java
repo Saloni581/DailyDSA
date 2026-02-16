@@ -136,6 +136,25 @@ public class Stacks {
         pushAtTheBottom(st, top);
     }
 
+    // simpler version
+    public static int stockSpan(int arr[], int i) {
+        // core case 
+        if(i >= arr.length || i < 0) {
+            return -1;
+        }
+        int price = arr[i];
+        int index = i-1;
+        int span  = 1;
+        while(index >= 0) {
+            if(price >= arr[index]) {
+                span++;
+            } else {
+                break;
+            }
+            index--;
+        }
+        return span;
+    }
 
     public static void main(String[] args) {
         // // using linked list
@@ -195,16 +214,19 @@ public class Stacks {
         // }
 
         // reverse a stack
-        Stack<Integer> st = new Stack<>();
-        st.push(1);
-        st.push(2);
-        st.push(3);
-        st.push(4);
-        st.push(5);
-        st.push(6);
-        System.out.println("Before Reversing: "+ st);
-        // reverseStack(st);
-        reverseStackRec(st);
-        System.out.println("After Reversing: "+ st);
+        // Stack<Integer> st = new Stack<>();
+        // st.push(1);
+        // st.push(2);
+        // st.push(3);
+        // st.push(4);
+        // st.push(5);
+        // st.push(6);
+        // System.out.println("Before Reversing: "+ st);
+        // // reverseStack(st);
+        // reverseStackRec(st);
+        // System.out.println("After Reversing: "+ st);
+        int arr[] = {100, 80, 60, 70, 60, 75, 85};
+        int span = stockSpan(arr, 6);
+        System.out.println(span);
     }
 }
