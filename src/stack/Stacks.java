@@ -136,7 +136,7 @@ public class Stacks {
         pushAtTheBottom(st, top);
     }
 
-    // simpler version
+    // stock span problem: simpler version
     public static int stockSpan(int arr[], int i) {
         // core case 
         if(i >= arr.length || i < 0) {
@@ -154,6 +154,63 @@ public class Stacks {
             index--;
         }
         return span;
+    }
+
+    // next greater element problem
+    public static void nextGreater(int[] nums) {
+        Stack<Integer> s = new Stack<>();
+        for(int i=nums.length-1; i>=0; i--) {
+            while(!s.isEmpty() && s.peek() <= nums[i]) {
+                s.pop();
+            }
+            int curr = nums[i];
+            if(s.isEmpty()) {
+                nums[i] = -1;
+            } else {
+                nums[i] = s.peek();
+            }
+            s.push(curr);
+        }
+    }
+
+    // previous greater element problem 
+    public static void prevGreater(int[] nums) {
+        Stack<Integer> s = new Stack<>();
+        for(int i=0; i<nums.length; i++) {
+            while(!s.isEmpty() && s.peek() <= nums[i]) {
+                s.pop();
+            }
+            int curr = nums[i];
+            if(s.isEmpty()) {
+                nums[i] = -1;
+            } else {
+                nums[i] = s.peek();
+            }
+            s.push(curr);
+        }
+    }
+
+    // previous greater element problem : Modified for Online Stock Span Problem
+    public static ArrayList<Integer> stockSpan(int[] nums) {
+        Stack<Integer> s = new Stack<>();
+        ArrayList<Integer> spans = new ArrayList<>();
+        for(int i=0; i<nums.length; i++) {
+            int span = 1;
+            while(!s.isEmpty() && s.peek() <= nums[i]) {
+                span++;
+                s.pop();
+            }
+            spans.add(span);
+            s.push(nums[i]);
+        }
+        return spans;
+    }
+
+    public static void printArr(int[] nums) {
+        for(int i=0; i<nums.length; i++) {
+            System.out.print(nums[i]+ " ");
+        }
+        System.out.println();
     }
 
     public static void main(String[] args) {
@@ -226,7 +283,24 @@ public class Stacks {
         // reverseStackRec(st);
         // System.out.println("After Reversing: "+ st);
         int arr[] = {100, 80, 60, 70, 60, 75, 85};
-        int span = stockSpan(arr, 6);
-        System.out.println(span);
+        // int span = stockSpan(arr, 6);
+        // System.out.println(span);
+        // System.out.println("Before finding Next Greater: ");
+        // printArr(arr);
+        // nextGreater(arr);
+        // System.out.print("After finding Next Greater: ");
+        // printArr(arr);
+        
+        // System.out.println("Before finding Prev Greater: ");
+        // printArr(arr);
+        // prevGreater(arr);
+        // System.out.print("After finding Prev Greater: ");
+        // printArr(arr);
+
+        System.out.println("Before finding Stock Span: ");
+        printArr(arr);
+        ArrayList<Integer> spans = stockSpan(arr);
+        System.out.print("After finding Stock Span: ");
+        System.out.println(spans);
     }
 }
