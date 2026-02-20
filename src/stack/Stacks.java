@@ -190,20 +190,18 @@ public class Stacks {
         }
     }
 
-    // previous greater element problem : Modified for Online Stock Span Problem
-    public static ArrayList<Integer> stockSpan(int[] nums) {
-        Stack<Integer> s = new Stack<>();
-        ArrayList<Integer> spans = new ArrayList<>();
+    // previous greater element problem : Modified Stock Span Problem
+    public static Stack<int[]> stockSpan(int[] nums) {
+        Stack<int[]> s = new Stack<>();
         for(int i=0; i<nums.length; i++) {
             int span = 1;
-            while(!s.isEmpty() && s.peek() <= nums[i]) {
-                span++;
-                s.pop();
+            int currPrice = nums[i];
+            while(!s.isEmpty() && s.peek()[0] <= currPrice) {
+                span += s.pop()[1];
             }
-            spans.add(span);
-            s.push(nums[i]);
+            s.push(new int[]{currPrice, span});
         }
-        return spans;
+        return s;
     }
 
     public static void printArr(int[] nums) {
@@ -299,8 +297,11 @@ public class Stacks {
 
         System.out.println("Before finding Stock Span: ");
         printArr(arr);
-        ArrayList<Integer> spans = stockSpan(arr);
-        System.out.print("After finding Stock Span: ");
-        System.out.println(spans);
+        Stack<int[]> stocks = stockSpan(arr);
+        System.out.println("After finding Stock Span: ");
+        while(!stocks.isEmpty()) {
+            int[] priceSpan = stocks.pop();
+            System.out.println("Price: " + priceSpan[0] + ", Span: " + priceSpan[1]);
+        }
     }
 }
