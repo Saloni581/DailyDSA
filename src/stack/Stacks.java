@@ -190,7 +190,7 @@ public class Stacks {
         }
     }
 
-    // previous greater element problem : Modified Stock Span Problem
+    // previous greater element problem : Modified Online Stock Span Problem
     public static Stack<int[]> stockSpan(int[] nums) {
         Stack<int[]> s = new Stack<>();
         for(int i=0; i<nums.length; i++) {
@@ -202,6 +202,33 @@ public class Stacks {
             s.push(new int[]{currPrice, span});
         }
         return s;
+    }
+
+    // valid parentheses ([])
+    public static boolean isValidParentheses(String s) {
+        if(s.length() == 1 || s.length() == 0) {
+            return false;
+        }
+        Stack<Character> st = new Stack<>();
+        for(int i=0; i<s.length(); i++) {
+            char curr = s.charAt(i);
+            if(curr == '{' || curr == '[' || curr == '(') {
+                st.push(curr);
+            } else {
+                if(!st.isEmpty()) {
+                    if((curr == '}' && st.peek() == '{') 
+                        || 
+                    (curr == ')' && st.peek() == '(') 
+                        || 
+                    (curr == ']' && st.peek() == '[')) {
+                        st.pop();
+                    } else return false;
+                } else {
+                    return false;
+                }
+            }
+        }
+        return st.isEmpty();
     }
 
     public static void printArr(int[] nums) {
@@ -280,7 +307,7 @@ public class Stacks {
         // // reverseStack(st);
         // reverseStackRec(st);
         // System.out.println("After Reversing: "+ st);
-        int arr[] = {100, 80, 60, 70, 60, 75, 85};
+        // int arr[] = {100, 80, 60, 70, 60, 75, 85};
         // int span = stockSpan(arr, 6);
         // System.out.println(span);
         // System.out.println("Before finding Next Greater: ");
@@ -295,13 +322,15 @@ public class Stacks {
         // System.out.print("After finding Prev Greater: ");
         // printArr(arr);
 
-        System.out.println("Before finding Stock Span: ");
-        printArr(arr);
-        Stack<int[]> stocks = stockSpan(arr);
-        System.out.println("After finding Stock Span: ");
-        while(!stocks.isEmpty()) {
-            int[] priceSpan = stocks.pop();
-            System.out.println("Price: " + priceSpan[0] + ", Span: " + priceSpan[1]);
-        }
+        // System.out.println("Before finding Stock Span: ");
+        // printArr(arr);
+        // Stack<int[]> stocks = stockSpan(arr);
+        // System.out.println("After finding Stock Span: ");
+        // while(!stocks.isEmpty()) {
+        //     int[] priceSpan = stocks.pop();
+        //     System.out.println("Price: " + priceSpan[0] + ", Span: " + priceSpan[1]);
+        // }
+
+        System.out.println("isValid parentheses result: "+isValidParentheses("([])"));
     }
 }
