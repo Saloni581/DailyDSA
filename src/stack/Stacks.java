@@ -231,6 +231,30 @@ public class Stacks {
         return st.isEmpty();
     }
 
+    // duplicate parentheses
+    public static boolean isDuplicateParentheses(String s) {
+        Stack<Character> st = new Stack<>();
+        int count = 0;
+        for(int i=0; i<s.length(); i++) {
+            char curr = s.charAt(i);
+            if(curr == ')') {
+                while (st.peek() != '(') {
+                    st.pop();
+                    count++; // counting everthing else except braces (idea: if nothing occurs btw braces => they are duplicate)
+                }
+                if(count < 1) {
+                    return true;
+                }
+                else {
+                    st.pop(); // matching pair is found 
+                }
+            } else {
+                st.push(curr); 
+            }
+        }
+        return st.isEmpty();
+    }
+
     public static void printArr(int[] nums) {
         for(int i=0; i<nums.length; i++) {
             System.out.print(nums[i]+ " ");
@@ -331,6 +355,8 @@ public class Stacks {
         //     System.out.println("Price: " + priceSpan[0] + ", Span: " + priceSpan[1]);
         // }
 
-        System.out.println("isValid parentheses result: "+isValidParentheses("([])"));
+        // System.out.println("isValid parentheses result: "+isValidParentheses("([])"));
+
+        System.out.println("isDuplicate parentheses result: "+isDuplicateParentheses("(((a+b)) + (c+d))"));
     }
 }
