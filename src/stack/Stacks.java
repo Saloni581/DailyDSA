@@ -255,6 +255,25 @@ public class Stacks {
         return st.isEmpty();
     }
 
+    // max area in histogram - brute force approach solution [2, 1, 5, 6, 2, 3]
+    public static int maxAreaHist(int heights[]) {
+        int maxHistArea = 0;
+
+        for(int i=0; i<heights.length; i++) {
+            int smallest = heights[i];
+            int idx = 1;
+            for(int j=i; j<heights.length; j++) {
+                if(heights[j] < smallest) {
+                    smallest = heights[j];
+                }
+                int currArea = smallest * idx;
+                maxHistArea = Math.max(maxHistArea, currArea); // [2, ]
+                idx++;
+            }
+        }
+        return maxHistArea;
+    }
+
     public static void printArr(int[] nums) {
         for(int i=0; i<nums.length; i++) {
             System.out.print(nums[i]+ " ");
@@ -357,6 +376,10 @@ public class Stacks {
 
         // System.out.println("isValid parentheses result: "+isValidParentheses("([])"));
 
-        System.out.println("isDuplicate parentheses result: "+isDuplicateParentheses("(((a+b)) + (c+d))"));
+        // System.out.println("isDuplicate parentheses result: "+isDuplicateParentheses("(((a+b)) + (c+d))"));
+
+        // max area in histogram
+        int heights[] = {2, 1, 5, 6, 2, 3};
+        System.out.println("The maximum area in histogram is: "+maxAreaHist(heights));
     }
 }
