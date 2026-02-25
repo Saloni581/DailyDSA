@@ -190,6 +190,40 @@ public class Stacks {
         }
     }
 
+    // next smaller element problem
+     public static void nextSmaller(int[] nums) {
+        Stack<Integer> s = new Stack<>();
+        for(int i=nums.length-1; i>=0; i--) {
+            while(!s.isEmpty() && s.peek() >= nums[i]) {
+                s.pop();
+            }
+            int curr = nums[i];
+            if(s.isEmpty()) {
+                nums[i] = -1;
+            } else {
+                nums[i] = s.peek();
+            }
+            s.push(curr);
+        }
+    }
+
+    // prev smaller element problem
+    public static void prevSmaller(int[] nums) {
+        Stack<Integer> s = new Stack<>();
+        for(int i=0; i<nums.length; i++) {
+            while(!s.isEmpty() && s.peek() >= nums[i]) {
+                s.pop();
+            }
+            int curr = nums[i];
+            if(s.isEmpty()) {
+                nums[i] = -1;
+            } else {
+                nums[i] = s.peek();
+            }
+            s.push(curr);
+        }
+    }
+
     // previous greater element problem : Modified Online Stock Span Problem
     public static Stack<int[]> stockSpan(int[] nums) {
         Stack<int[]> s = new Stack<>();
@@ -255,7 +289,7 @@ public class Stacks {
         return st.isEmpty();
     }
 
-    // max area in histogram - brute force approach solution [2, 1, 5, 6, 2, 3]
+    // max area in histogram - brute force approach solution 
     public static int maxAreaHist(int heights[]) {
         int maxHistArea = 0;
 
@@ -273,6 +307,11 @@ public class Stacks {
         }
         return maxHistArea;
     }
+
+    // max area in histogram:  stack approach (optimized) [2, 1, 5, 6, 2, 3]
+    // public static int maxAreaHistOptimized(int[] heights) {
+    //    
+    // }
 
     public static void printArr(int[] nums) {
         for(int i=0; i<nums.length; i++) {
@@ -350,9 +389,9 @@ public class Stacks {
         // // reverseStack(st);
         // reverseStackRec(st);
         // System.out.println("After Reversing: "+ st);
-        // int arr[] = {100, 80, 60, 70, 60, 75, 85};
-        // int span = stockSpan(arr, 6);
-        // System.out.println(span);
+        
+        // prev and next greater element problems
+        int arr[] = {100, 80, 60, 70, 60, 75, 85};
         // System.out.println("Before finding Next Greater: ");
         // printArr(arr);
         // nextGreater(arr);
@@ -364,7 +403,23 @@ public class Stacks {
         // prevGreater(arr);
         // System.out.print("After finding Prev Greater: ");
         // printArr(arr);
-
+        
+        // prev and next smaller problesm
+        // System.out.println("Before finding Next Smaller: ");
+        // printArr(arr);
+        // nextSmaller(arr);
+        // System.out.print("After finding Next Smaller: ");
+        // printArr(arr);
+        
+        System.out.println("Before finding Prev Smaller: ");
+        printArr(arr);
+        prevSmaller(arr);
+        System.out.print("After finding Prev Smaller: ");
+        printArr(arr);
+        
+        // stock span related problems 
+        // int span = stockSpan(arr, 6);
+        // System.out.println(span);
         // System.out.println("Before finding Stock Span: ");
         // printArr(arr);
         // Stack<int[]> stocks = stockSpan(arr);
@@ -379,7 +434,7 @@ public class Stacks {
         // System.out.println("isDuplicate parentheses result: "+isDuplicateParentheses("(((a+b)) + (c+d))"));
 
         // max area in histogram
-        int heights[] = {2, 1, 5, 6, 2, 3};
-        System.out.println("The maximum area in histogram is: "+maxAreaHist(heights));
+        // int heights[] = {2, 1, 5, 6, 2, 3};
+        // System.out.println("The maximum area in histogram is: "+maxAreaHist(heights));
     }
 }
