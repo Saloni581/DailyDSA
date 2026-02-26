@@ -1,6 +1,8 @@
 package src.stack;
 import src.linkedList.LinkedList;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Stack;
 
 public class Stacks {
@@ -301,17 +303,57 @@ public class Stacks {
                     smallest = heights[j];
                 }
                 int currArea = smallest * idx;
-                maxHistArea = Math.max(maxHistArea, currArea); // [2, ]
+                maxHistArea = Math.max(maxHistArea, currArea); // 
                 idx++;
             }
         }
         return maxHistArea;
     }
 
-    // max area in histogram:  stack approach (optimized) [2, 1, 5, 6, 2, 3]
-    // public static int maxAreaHistOptimized(int[] heights) {
-    //    
-    // }
+    // max area in histogram:  stack approach (optimized) 
+    public static int maxAreaHistOptimized(int[] heights) {
+       ArrayList<Integer> left = new ArrayList<>();
+       ArrayList<Integer> right = new ArrayList<>();
+
+       Stack<Integer> s = new Stack<>();
+
+       // next smaller elements
+       for(int i=heights.length-1; i>=0; i--) {
+            while(!s.isEmpty() && heights[s.peek()] >= heights[i]) {
+                s.pop();
+            }
+            if(s.isEmpty()) {
+                right.add(-1);
+            } else {
+                right.add(s.peek());
+            }
+            s.push(i);
+       }
+
+       Collections.reverse(right);
+
+       // prev smaller elements
+       for(int i=0; i<heights.length; i++) {
+            while(!s.isEmpty() && heights[s.peek()] >= heights[i]) {
+                s.pop();
+            }
+            if(s.isEmpty()) {
+                left.add(-1);
+            } else {
+                left.add(s.peek());
+            }
+            s.push(i);
+       }
+
+       // find max area in histogram using left and smaller values for each bar 
+       int maxArea = 0;
+       for(int i=0; i<heights.length; i++) {
+            int width = right.get(i) - left.get(i) -1;
+            int currArea = heights[i] * width;
+            maxArea = Math.max(currArea, maxArea);
+       }
+       return maxArea;
+    }
 
     public static void printArr(int[] nums) {
         for(int i=0; i<nums.length; i++) {
@@ -391,7 +433,7 @@ public class Stacks {
         // System.out.println("After Reversing: "+ st);
         
         // prev and next greater element problems
-        int arr[] = {100, 80, 60, 70, 60, 75, 85};
+        // int arr[] = {100, 80, 60, 70, 60, 75, 85};
         // System.out.println("Before finding Next Greater: ");
         // printArr(arr);
         // nextGreater(arr);
@@ -411,11 +453,15 @@ public class Stacks {
         // System.out.print("After finding Next Smaller: ");
         // printArr(arr);
         
-        System.out.println("Before finding Prev Smaller: ");
-        printArr(arr);
-        prevSmaller(arr);
-        System.out.print("After finding Prev Smaller: ");
-        printArr(arr);
+        // System.out.println("Before finding Prev Smaller: ");
+        // printArr(arr);
+        // prevSmaller(arr);
+        // System.out.print("After finding Prev Smaller: ");
+        // printArr(arr);
+
+        // max area in histogram solution 
+        int arr[] = {2, 1, 5, 6, 2, 3};
+        System.out.println(maxAreaHistOptimized(arr));
         
         // stock span related problems 
         // int span = stockSpan(arr, 6);
